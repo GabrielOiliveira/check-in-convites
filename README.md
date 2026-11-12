@@ -1,87 +1,62 @@
-🎟️ Check-in de Convites — Grupo Belmont
 
-Sistema web desenvolvido para facilitar e agilizar o controle de entrada de convidados na Confraternização do Grupo Belmont.
+# Check-in de Convites
 
-A aplicação permite validar convites por QR Code ou pesquisar convidados pelo nome, registrar entradas e acompanhar os check-ins realizados em tempo real, oferecendo mais organização, segurança e praticidade para a equipe responsável pela portaria.
+Sistema desenvolvido para realizar o controle de entrada de convidados na confraternização do Grupo Belmont.
 
-🚀 Funcionalidades
-Leitura de QR Code: identificação e validação de convites através da câmera do dispositivo.
-Busca de convidados: pesquisa rápida pelo nome do convidado ou titular do convite.
-Validação de convites: identificação de convites válidos, inválidos ou já utilizados.
-Controle de entrada: registro individual dos convidados que já realizaram o check-in.
-Múltiplas portarias: identificação de diferentes pontos de entrada.
-Sincronização de dados: integração com Google Sheets para compartilhar os registros entre portarias.
-Modo offline: armazenamento local das entradas quando não houver conexão com a internet, com sincronização posterior quando disponível.
-Exportação CSV: possibilidade de baixar os registros de entrada.
-Interface responsiva: utilização em computadores, tablets e smartphones.
-Aplicação instalável: suporte a recursos de Progressive Web App (PWA).
-🛠️ Tecnologias utilizadas
+A aplicação permite consultar convites, validar QR Codes e registrar a entrada dos convidados, facilitando o trabalho da equipe responsável pela portaria.
 
-O projeto foi desenvolvido utilizando tecnologias web:
+## Funcionalidades
 
-HTML5
-CSS3
-JavaScript
-Google Sheets (integração para sincronização de dados)
-Service Worker
-Web App Manifest
-LocalStorage
-API de câmera e leitura de QR Code
-📱 Como utilizar
-Acesse o endereço disponibilizado para o evento.
-Abra a aplicação pelo navegador, preferencialmente Google Chrome ou Safari.
-Informe a senha de acesso da portaria.
-Aguarde o carregamento da lista de convidados.
-Utilize a câmera para ler o QR Code do convite ou pesquise pelo nome do convidado.
-Confira as informações apresentadas.
-Se o convite estiver válido, clique em Registrar entrada.
-O sistema atualizará os registros de check-in.
-🔄 Funcionamento offline
+- Leitura de convites por QR Code.
+- Busca de convidados pelo nome.
+- Validação de convites.
+- Registro de check-in.
+- Controle de entradas já realizadas.
+- Suporte para múltiplas portarias.
+- Sincronização de informações com Google Sheets.
+- Armazenamento local para funcionamento offline.
+- Exportação dos registros em CSV.
+- Interface adaptada para celulares, tablets e computadores.
+- Instalação como aplicativo (PWA).
 
-A aplicação possui armazenamento local para permitir que os registros de entrada continuem funcionando mesmo em situações de instabilidade na conexão com a internet.
+## Tecnologias
 
-Quando configurada a integração com a planilha Google, os registros pendentes são sincronizados automaticamente quando a conexão é restabelecida.
+- HTML
+- CSS
+- JavaScript
+- Google Sheets
+- LocalStorage
+- Service Worker
+- Progressive Web App (PWA)
 
-📂 Estrutura do projeto
-text
-check-in-convites/
-│
-├── index.html             # Aplicação principal
-├── manifest.webmanifest   # Configurações do PWA
-├── sw.js                  # Service Worker
-├── apple-touch-icon.png   # Ícone para dispositivos Apple
-├── icon-192.png           # Ícone da aplicação
-├── icon-512.png           # Ícone em alta resolução
-└── README.md              # Documentação do projeto
+## Como executar
 
-💻 Executando o projeto
+Clone o repositório:
 
-O projeto utiliza tecnologias nativas da web e não necessita de instalação de dependências ou processo de build.
-
-Para executar:
-
-Faça o clone do repositório:
-bash
+```bash
 git clone https://github.com/GabrielOiliveira/check-in-convites.git
+```
 
-Entre na pasta:
-bash
+Entre na pasta do projeto:
+
+```bash
 cd check-in-convites
+```
 
-Execute a aplicação utilizando um servidor web local ou publique os arquivos em uma hospedagem com HTTPS.
+Abra o projeto utilizando um servidor local ou publique os arquivos em uma hospedagem com HTTPS.
 
-Importante: para utilizar recursos como câmera e criptografia do navegador, acesse a aplicação por HTTPS ou localhost. Abrir o arquivo index.html diretamente pode impedir o funcionamento de alguns recursos.
+**Observação:** o acesso por HTTPS ou localhost é necessário para utilizar recursos do navegador, como a câmera para leitura dos QR Codes.
 
-🎯 Objetivo
+## Funcionamento
 
-Desenvolver uma solução simples, prática e eficiente para gerenciamento de convidados e controle de acesso em eventos, reduzindo processos manuais e proporcionando maior agilidade no atendimento da portaria.
+Ao acessar o sistema, a equipe da portaria pode consultar os convidados através da leitura do QR Code ou pela busca por nome.
 
-👨‍💻 Desenvolvedor
+Após localizar o convite, o sistema verifica sua situação e permite registrar a entrada quando estiver disponível.
 
-Gabriel Oliveira
+Os registros são armazenados localmente e podem ser sincronizados com o Google Sheets, permitindo o acompanhamento das entradas realizadas em diferentes portarias.
 
-GitHub: @GabrielOiliveira
+## Desenvolvedor
 
-<p align="center">
-Desenvolvido para facilitar a organização e o controle de acesso da Confraternização do Grupo Belmont.
-</p>
+**Gabriel Oliveira**
+
+[GitHub](https://github.com/GabrielOiliveira)
