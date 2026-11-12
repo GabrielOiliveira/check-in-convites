@@ -60,3 +60,4 @@ Os registros são armazenados localmente e podem ser sincronizados com o Google 
 **Gabriel Oliveira**
 
 [GitHub](https://github.com/GabrielOiliveira)
+[LinkedIn](https://www.linkedin.com/in/gabrieloiliveira)
