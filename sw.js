@@ -1,5 +1,5 @@
 /* Service worker do check-in: abre mesmo sem internet. Não mexe nas chamadas à planilha do Google. */
-const V = 'belmont-checkin-v2';
+const V = 'belmont-checkin-v3';
 const CORE = ['./', 'index.html', 'manifest.webmanifest', 'icon-192.png', 'icon-512.png', 'apple-touch-icon.png'];
 const CDN = ['cdn.jsdelivr.net', 'cdnjs.cloudflare.com', 'fonts.googleapis.com', 'fonts.gstatic.com'];   // leitor de QR (jsQR) e fonte: guardados após o 1º uso
 
