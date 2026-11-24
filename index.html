@@ -178,6 +178,14 @@ ul{list-style:none;margin:0;padding:0}
 .sheet .alert small{display:block;font-size:13px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;opacity:.92}
 .sheet .alert strong{display:block;font-size:19px;font-weight:700}
 .sheet .alert em{display:block;font-style:normal;font-size:15px;margin-top:2px}
+.sheet.menor{background:#C2410C;color:#fff}
+.sheet.menor .sh-ico{background:rgba(255,255,255,.26)}
+.sheet.menor .chip{background:rgba(0,0,0,.3);color:#fff}
+.sheet.menor .alert{background:#fff;color:#7C2D07;border-left:0;border:4px solid #FFD166;border-radius:14px;padding:16px 16px;margin-top:14px;box-shadow:0 6px 18px rgba(0,0,0,.28)}
+.sheet.menor .alert .ico{width:44px;height:44px;font-size:28px;background:#C2410C;color:#fff;margin-right:14px}
+.sheet.menor .alert small{font-size:14px;color:#9A3412;opacity:1}
+.sheet.menor .alert strong{font-size:28px;font-size:clamp(20px,5.8vw,28px);line-height:1.1;white-space:nowrap;font-weight:800;letter-spacing:.02em;color:#7C2D07}
+.sheet.menor .alert em{font-size:18px;font-weight:700;margin-top:6px;color:#7C2D07}
 .sheet .btns{flex:none;width:100%;max-width:560px;margin:0 auto;display:grid;grid-gap:10px;gap:10px;
   padding:12px 22px 22px;padding-bottom:calc(22px + env(safe-area-inset-bottom))}
 .sheet .main{background:#fff;color:var(--ink);font-weight:800;font-size:21px;min-height:70px;width:100%;box-shadow:0 8px 20px rgba(0,0,0,.18)}
@@ -261,7 +269,7 @@ ul{list-style:none;margin:0;padding:0}
       <div id="lock-err" class="err" hidden></div>
       <button id="btn-unlock" class="go" type="button">Abrir lista</button>
     </div>
-    <p class="ver">Página versão 4.4 (24/11) · uma senha por portaria</p>
+    <p class="ver">Página versão 4.5 (24/11) · uma senha por portaria</p>
   </div>
 </section>
 
@@ -308,7 +316,7 @@ ul{list-style:none;margin:0;padding:0}
       <button id="btn-logout" class="quiet" type="button">Sair deste aparelho</button>
       <button id="btn-clear" class="danger" type="button">Apagar entradas deste aparelho</button>
       <p class="note" id="note"></p>
-      <p class="note">Versão 4.4 (24/11)</p>
+      <p class="note">Versão 4.5 (24/11)</p>
     </div>
   </details>
 
@@ -341,7 +349,7 @@ ul{list-style:none;margin:0;padding:0}
     <div class="sh-head"><span class="sh-ico" id="sh-ico" aria-hidden="true"></span><div class="status" id="sh-status"></div></div>
     <div class="name" id="sh-name"></div>
     <div class="meta" id="sh-meta"></div>
-    <div class="alert" id="sh-alert" role="note" hidden><span class="ico" aria-hidden="true">!</span><span><small>Lembrete</small><strong>Entregar pulseira</strong><em id="sh-alert-sub" hidden></em></span></div>
+    <div class="alert" id="sh-alert" role="note" hidden><span class="ico" aria-hidden="true">!</span><span><small id="sh-alert-small">Lembrete</small><strong id="sh-alert-title">Entregar pulseira</strong><em id="sh-alert-sub" hidden></em></span></div>
   </div>
   <div class="btns" id="sh-btns"></div>
 </div>
@@ -465,7 +473,7 @@ function unlock(passRaw, remember, silent){
     err.textContent = m === 'nocrypto'
       ? 'Este navegador não abriu a lista. Acesse a página pelo endereço https do evento, direto no Safari ou no Chrome.'
       : m === 'senha'
-        ? 'Senha incorreta. Use a senha da sua portaria (cada portaria tem uma senha diferente) e confira se está na página versão 4.4 (24/11).'
+        ? 'Senha incorreta. Use a senha da sua portaria (cada portaria tem uma senha diferente) e confira se está na página versão 4.5 (24/11).'
         : 'Não consegui abrir a lista (' + (e && (e.name || e.message) || 'erro') + '). Tire um print desta tela e envie ao responsável.';
     err.hidden = false;
   });
@@ -528,7 +536,7 @@ function diagText(){
     servidor: 'A planilha respondeu, mas recusou o pedido.'
   }[lastErr.tipo] || 'Erro desconhecido.';
   return 'Portaria: ' + device + '\nHora: ' + fmtTime(lastErr.quando) + '\nTipo: ' + lastErr.tipo + (lastErr.http ? ' (HTTP ' + lastErr.http + ')' : '') +
-    '\n\n' + causa + '\n\nDetalhe: ' + lastErr.detalhe + '\n\nEndereço: ' + host + '\nPágina versão 4.4 (24/11)';
+    '\n\n' + causa + '\n\nDetalhe: ' + lastErr.detalhe + '\n\nEndereço: ' + host + '\nPágina versão 4.5 (24/11)';
 }
 
 function addConflict(code, srv, payload){
@@ -735,13 +743,15 @@ function openSheet(kind, rec, code, extra){
       status.textContent = 'Convite válido';
       if (rec.g && !vn) addMeta('Nome ainda não vinculado a este convite. Avise o responsável.');
       if (rec.t === 'CRIANÇA' || rec.t === 'MENOR DE IDADE') {
-        al.hidden = false;
-        var sub = $('#sh-alert-sub');
-        if (rec.t === 'MENOR DE IDADE') { sub.textContent = 'Menor de idade: não servir bebida alcoólica.'; sub.hidden = false; } else { sub.hidden = true; }
+        al.hidden = false; sh.classList.add('menor');
+        $('#sh-alert-small').textContent = 'Atenção';
+        $('#sh-alert-title').textContent = rec.t === 'MENOR DE IDADE' ? 'MENOR DE IDADE' : 'CRIANÇA';
+        var sub = $('#sh-alert-sub'); sub.hidden = false;
+        sub.textContent = rec.t === 'MENOR DE IDADE' ? 'Entregar pulseira. NÃO servir bebida alcoólica.' : 'Entregar pulseira.';
       }
       var reg = addBtn('Registrar entrada', 'main', function () { register(code, rec, reg); });
       addBtn('Cancelar', 'sec', closeSheet);
-      beep('ok'); vibrate(90);
+      beep('ok'); vibrate(sh.classList.contains('menor') ? [120, 70, 120, 70, 120] : 90);
     } else {
       var ci = checkins[code];
       status.textContent = extra || 'Entrada já registrada';
