@@ -178,6 +178,8 @@ ul{list-style:none;margin:0;padding:0}
 .sheet .alert small{display:block;font-size:13px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;opacity:.92}
 .sheet .alert strong{display:block;font-size:19px;font-weight:700}
 .sheet .alert em{display:block;font-style:normal;font-size:15px;margin-top:2px}
+.sheet .famb{display:block;text-align:left;background:#fff;color:#14221A;border-radius:12px;padding:14px 16px;margin-top:14px;
+  font-size:22px;font-size:clamp(18px,5.8vw,24px);font-weight:800;letter-spacing:.02em;white-space:nowrap;pointer-events:none;-webkit-user-select:none;user-select:none}
 .sheet.menor{background:#C2410C;color:#fff}
 .sheet.menor .sh-ico{background:rgba(255,255,255,.26)}
 .sheet.menor .chip{background:rgba(0,0,0,.3);color:#fff}
@@ -269,7 +271,7 @@ ul{list-style:none;margin:0;padding:0}
       <div id="lock-err" class="err" hidden></div>
       <button id="btn-unlock" class="go" type="button">Abrir lista</button>
     </div>
-    <p class="ver">Página versão 4.6 (25/11) · uma senha por portaria</p>
+    <p class="ver">Página versão 4.9 (25/11) · uma senha por portaria</p>
   </div>
 </section>
 
@@ -316,7 +318,7 @@ ul{list-style:none;margin:0;padding:0}
       <button id="btn-logout" class="quiet" type="button">Sair deste aparelho</button>
       <button id="btn-clear" class="danger" type="button">Apagar entradas deste aparelho</button>
       <p class="note" id="note"></p>
-      <p class="note">Versão 4.6 (25/11)</p>
+      <p class="note">Versão 4.9 (25/11)</p>
     </div>
   </details>
 
@@ -349,6 +351,7 @@ ul{list-style:none;margin:0;padding:0}
     <div class="sh-head"><span class="sh-ico" id="sh-ico" aria-hidden="true"></span><div class="status" id="sh-status"></div></div>
     <div class="name" id="sh-name"></div>
     <div class="meta" id="sh-meta"></div>
+    <div class="famb" id="sh-fam" hidden>FAMÍLIA RIBEIRO</div>
     <div class="alert" id="sh-alert" role="note" hidden><span class="ico" aria-hidden="true">!</span><span><small id="sh-alert-small">Lembrete</small><strong id="sh-alert-title">Entregar pulseira</strong><em id="sh-alert-sub" hidden></em></span></div>
   </div>
   <div class="btns" id="sh-btns"></div>
@@ -492,7 +495,7 @@ function unlock(passRaw, remember, silent){
     err.textContent = m === 'nocrypto'
       ? 'Este navegador não abriu a lista. Acesse a página pelo endereço https do evento, direto no Safari ou no Chrome.'
       : m === 'senha'
-        ? 'Senha incorreta. Use a senha do seu perfil (cada perfil tem uma senha diferente) e confira se está na página versão 4.6 (25/11).'
+        ? 'Senha incorreta. Use a senha do seu perfil (cada perfil tem uma senha diferente) e confira se está na página versão 4.9 (25/11).'
         : 'Não consegui abrir a lista (' + (e && (e.name || e.message) || 'erro') + '). Tire um print desta tela e envie ao responsável.';
     err.hidden = false;
   });
@@ -558,7 +561,7 @@ function diagText(){
     servidor: 'A planilha respondeu, mas recusou o pedido.'
   }[lastErr.tipo] || 'Erro desconhecido.';
   return 'Portaria: ' + device + '\nHora: ' + fmtTime(lastErr.quando) + '\nTipo: ' + lastErr.tipo + (lastErr.http ? ' (HTTP ' + lastErr.http + ')' : '') +
-    '\n\n' + causa + '\n\nDetalhe: ' + lastErr.detalhe + '\n\nEndereço: ' + host + '\nPágina versão 4.6 (25/11)';
+    '\n\n' + causa + '\n\nDetalhe: ' + lastErr.detalhe + '\n\nEndereço: ' + host + '\nPágina versão 4.9 (25/11)';
 }
 
 function addConflict(code, srv, payload){
@@ -739,7 +742,7 @@ function openSheet(kind, rec, code, extra){
   $('#toast').hidden = true;
   var sh = $('#sheet'); sh.className = 'sheet ' + kind;
   var status = $('#sh-status'), name = $('#sh-name'), meta = $('#sh-meta'), al = $('#sh-alert'), btns = $('#sh-btns');
-  meta.textContent = ''; btns.textContent = ''; al.hidden = true;
+  meta.textContent = ''; btns.textContent = ''; al.hidden = true; $('#sh-fam').hidden = true;
   $('#sh-ico').innerHTML = ICONS[kind];
   function addMeta(txt){ var d = document.createElement('div'); d.textContent = txt; meta.append(d); }
   function addTipo(rec){
@@ -775,6 +778,8 @@ function openSheet(kind, rec, code, extra){
     if (rec.x) addMeta('Sem convite impresso: confira o nome na lista.');
     if (kind === 'ok') {
       status.textContent = 'Convite válido';
+      var isFam = !!(rec.x && norm(rec.gr || '') === 'familia ribeiro');
+      if (isFam) $('#sh-fam').hidden = false;
       if (rec.g && !vn) addMeta('Nome ainda não vinculado a este convite. Avise o responsável.');
       if (rec.t === 'CRIANÇA' || rec.t === 'MENOR DE IDADE') {
         al.hidden = false; sh.classList.add('menor');
