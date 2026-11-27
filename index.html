@@ -271,7 +271,7 @@ ul{list-style:none;margin:0;padding:0}
       <div id="lock-err" class="err" hidden></div>
       <button id="btn-unlock" class="go" type="button">Abrir lista</button>
     </div>
-    <p class="ver">Página versão 5.0 (26/11) · uma senha por portaria</p>
+    <p class="ver">Página versão 5.1 (27/11) · uma senha por portaria</p>
   </div>
 </section>
 
@@ -318,7 +318,7 @@ ul{list-style:none;margin:0;padding:0}
       <button id="btn-logout" class="quiet" type="button">Sair deste aparelho</button>
       <button id="btn-clear" class="danger" type="button">Apagar entradas deste aparelho</button>
       <p class="note" id="note"></p>
-      <p class="note">Versão 5.0 (26/11)</p>
+      <p class="note">Versão 5.1 (27/11)</p>
     </div>
   </details>
 
@@ -495,7 +495,7 @@ function unlock(passRaw, remember, silent){
     err.textContent = m === 'nocrypto'
       ? 'Este navegador não abriu a lista. Acesse a página pelo endereço https do evento, direto no Safari ou no Chrome.'
       : m === 'senha'
-        ? 'Senha incorreta. Use a senha do seu perfil (cada perfil tem uma senha diferente) e confira se está na página versão 5.0 (26/11).'
+        ? 'Senha incorreta. Use a senha do seu perfil (cada perfil tem uma senha diferente) e confira se está na página versão 5.1 (27/11).'
         : 'Não consegui abrir a lista (' + (e && (e.name || e.message) || 'erro') + '). Tire um print desta tela e envie ao responsável.';
     err.hidden = false;
   });
@@ -520,7 +520,7 @@ function startApp(){
   if (memoryOnly) $('#memwarn').hidden = false;
   renderAll();
   requestWake();                                           // mantém a tela acesa com o app aberto
-  if (API) { syncNow(); setInterval(syncNow, 12000); }
+  if (API) { syncNow(); setInterval(syncNow, 20000); }
 }
 
 /* ---------- rede (planilha Google) ---------- */
@@ -561,7 +561,7 @@ function diagText(){
     servidor: 'A planilha respondeu, mas recusou o pedido.'
   }[lastErr.tipo] || 'Erro desconhecido.';
   return 'Portaria: ' + device + '\nHora: ' + fmtTime(lastErr.quando) + '\nTipo: ' + lastErr.tipo + (lastErr.http ? ' (HTTP ' + lastErr.http + ')' : '') +
-    '\n\n' + causa + '\n\nDetalhe: ' + lastErr.detalhe + '\n\nEndereço: ' + host + '\nPágina versão 5.0 (26/11)';
+    '\n\n' + causa + '\n\nDetalhe: ' + lastErr.detalhe + '\n\nEndereço: ' + host + '\nPágina versão 5.1 (27/11)';
 }
 
 function addConflict(code, srv, payload){
@@ -572,7 +572,7 @@ function addConflict(code, srv, payload){
 function flush(){
   if (!pending.length) return Promise.resolve(true);
   var op = pending[0];
-  return api('POST', null, op.payload, 8000).then(function (r) {
+  return api('POST', null, op.payload, 12000).then(function (r) {
     if (!r || r.ok !== true) { if (r && r.error === 'token') syncState = 'token'; else if (r && r.error === 'inativo') syncState = 'inativo'; else lastErr = {tipo: 'servidor', detalhe: JSON.stringify(r).slice(0, 180), quando: new Date().toISOString()}; return false; }
     if (op.op === 'checkin') {
       if (r.status === 'dup') {
@@ -816,7 +816,7 @@ function register(code, rec, btn){
     closeSheet(); toast('Entrada registrada: ' + lab); return;
   }
   btn.disabled = true; btn.textContent = 'Registrando…';
-  api('POST', null, payload, 7000).then(function (r) { return r; }, function (e) { lastErr = errInfo(e); return null; }).then(function (r) {
+  api('POST', null, payload, 10000).then(function (r) { return r; }, function (e) { lastErr = errInfo(e); return null; }).then(function (r) {
     if (r && r.ok && r.status === 'ok') {
       checkins[code] = {t: t, d: device, s: true, nm: nm}; lastAdded = code; saveAll(); renderAll();
       closeSheet(); toast('Entrada registrada: ' + lab);
