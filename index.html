@@ -149,10 +149,8 @@ ul{list-style:none;margin:0;padding:0}
 /* ---------- Resultado ---------- */
 .sheet{position:fixed;top:0;right:0;bottom:0;left:0;z-index:20;display:flex;flex-direction:column}
 .sh-body{flex:1 1 auto;min-height:0;overflow:auto;-webkit-overflow-scrolling:touch;display:flex;flex-direction:column;
-  padding:22px;padding-top:calc(24px + env(safe-area-inset-top))}
+  padding:22px;padding-top:calc(44px + env(safe-area-inset-top))}
 .sh-body > *{width:100%;max-width:520px;margin-left:auto;margin-right:auto;flex:none}
-.sh-body > :first-child{margin-top:auto}
-.sh-body > :last-child{margin-bottom:auto}
 .sh-body > * + *{margin-top:16px}
 .sheet.ok{background:var(--ok);color:#fff}
 .sheet.dup{background:var(--amber);color:var(--ink)}
@@ -271,7 +269,7 @@ ul{list-style:none;margin:0;padding:0}
       <div id="lock-err" class="err" hidden></div>
       <button id="btn-unlock" class="go" type="button">Abrir lista</button>
     </div>
-    <p class="ver">Página versão 5.1 (27/11) · uma senha por portaria</p>
+    <p class="ver">Página versão 5.2 (27/11) · uma senha por portaria</p>
   </div>
 </section>
 
@@ -318,7 +316,7 @@ ul{list-style:none;margin:0;padding:0}
       <button id="btn-logout" class="quiet" type="button">Sair deste aparelho</button>
       <button id="btn-clear" class="danger" type="button">Apagar entradas deste aparelho</button>
       <p class="note" id="note"></p>
-      <p class="note">Versão 5.1 (27/11)</p>
+      <p class="note">Versão 5.2 (27/11)</p>
     </div>
   </details>
 
@@ -495,7 +493,7 @@ function unlock(passRaw, remember, silent){
     err.textContent = m === 'nocrypto'
       ? 'Este navegador não abriu a lista. Acesse a página pelo endereço https do evento, direto no Safari ou no Chrome.'
       : m === 'senha'
-        ? 'Senha incorreta. Use a senha do seu perfil (cada perfil tem uma senha diferente) e confira se está na página versão 5.1 (27/11).'
+        ? 'Senha incorreta. Use a senha do seu perfil (cada perfil tem uma senha diferente) e confira se está na página versão 5.2 (27/11).'
         : 'Não consegui abrir a lista (' + (e && (e.name || e.message) || 'erro') + '). Tire um print desta tela e envie ao responsável.';
     err.hidden = false;
   });
@@ -561,7 +559,7 @@ function diagText(){
     servidor: 'A planilha respondeu, mas recusou o pedido.'
   }[lastErr.tipo] || 'Erro desconhecido.';
   return 'Portaria: ' + device + '\nHora: ' + fmtTime(lastErr.quando) + '\nTipo: ' + lastErr.tipo + (lastErr.http ? ' (HTTP ' + lastErr.http + ')' : '') +
-    '\n\n' + causa + '\n\nDetalhe: ' + lastErr.detalhe + '\n\nEndereço: ' + host + '\nPágina versão 5.1 (27/11)';
+    '\n\n' + causa + '\n\nDetalhe: ' + lastErr.detalhe + '\n\nEndereço: ' + host + '\nPágina versão 5.2 (27/11)';
 }
 
 function addConflict(code, srv, payload){
